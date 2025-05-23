@@ -16,17 +16,25 @@ namespace Thunders.TechTest.ApiService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EnviarPassagemVeiculo([FromBody] List<PassagemVeiculoDTO> dtos)
+        public async Task<IActionResult> EnviarPassagemVeiculo([FromBody] List<PassagemVeiculoDto> dtos)
         {
-            var retorno = await _service.CreatePassagensVeiculoAsync(dtos);
-            return Ok(retorno);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
+            try
+            {
+                var retorno = await _service.CreatePassagensVeiculoAsync(dtos, cts.Token);
+                return Ok(retorno);
+            }
+            catch (OperationCanceledException)
+            {
+                return StatusCode(408, "A operação foi cancelada por timeout.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            // implement if needed
-            return Ok();
-        }
     }
 }

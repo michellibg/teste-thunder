@@ -4,6 +4,6 @@ namespace Thunders.TechTest.ApiService.Application.Services.Interfaces
 {
     public interface IPassagemVeiculoService
     {
-        Task<int> CreatePassagensVeiculoAsync(List<PassagemVeiculoDTO> dtos);
+        Task<int> CreatePassagensVeiculoAsync(List<PassagemVeiculoDto> dtos, CancellationToken cancellationToken);
     }
 }

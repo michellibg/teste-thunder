@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using k8s.KubeConfigModels;
+using System.Threading;
+using System.Threading.Tasks;
 using Thunders.TechTest.ApiService.Application.DTOs;
 using Thunders.TechTest.ApiService.Application.Services.Interfaces;
+using Thunders.TechTest.ApiService.Domain.Entities;
 using Thunders.TechTest.ApiService.Infrastructure.Data;
 
 namespace Thunders.TechTest.ApiService.Application.Services
@@ -16,16 +19,36 @@ namespace Thunders.TechTest.ApiService.Application.Services
             _context = context;
             _mapper = mapper;
         }
-        
-        public async Task<int> CreatePassagensVeiculoAsync(List<PassagemVeiculoDTO> dtos)
+
+        public async Task<int> CreatePassagensVeiculoAsync(List<PassagemVeiculoDto> dtos, CancellationToken cancellationToken)
         {
-            var passagens = _mapper.Map<List<PassagemVeiculo>>(dtos);
+            try
+            {
+                var passagens = _mapper.Map<List<PassagemVeiculo>>(dtos);
 
-            _context.PassagemVeiculo.AddRange(passagens);
+                _context.PassagemVeiculo.AddRange(passagens);
 
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return 0; 
+            }
+            catch (Exception e)
+            {
+                await InserirLog(e.Message);
+                return 1; 
+            }
+        }
+
+        private async Task InserirLog(string message)
+        {
+            var log = new Log
+            {
+                DataRegistro = DateTime.Now,
+                Mensagem = message
+            };
+            _context.Log.Add(log);
             await _context.SaveChangesAsync();
 
-            return 0;
         }
     }
 }

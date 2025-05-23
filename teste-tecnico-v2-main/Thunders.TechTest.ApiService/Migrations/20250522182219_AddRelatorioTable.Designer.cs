@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Thunders.TechTest.ApiService.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Thunders.TechTest.ApiService.Infrastructure.Data;
 namespace Thunders.TechTest.ApiService.Migrations
 {
     [DbContext(typeof(PedagioContext))]
-    partial class PedagioContextModelSnapshot : ModelSnapshot
+    [Migration("20250522182219_AddRelatorioTable")]
+    partial class AddRelatorioTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,67 +62,6 @@ namespace Thunders.TechTest.ApiService.Migrations
                     b.ToTable("PassagemVeiculo");
                 });
 
-            modelBuilder.Entity("Thunders.TechTest.ApiService.Application.DTOs.RelatorioCidadePorHoraDto", b =>
-                {
-                    b.Property<string>("Cidade")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal?>("ValorTotal")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Cidade");
-
-                    b.ToTable("RelatorioCidadePorHora");
-                });
-
-            modelBuilder.Entity("Thunders.TechTest.ApiService.Application.DTOs.RelatorioFaturamentoPorPracaDto", b =>
-                {
-                    b.Property<string>("Mes")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Praca")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("ValorFatura")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Mes");
-
-                    b.ToTable("RelatorioFaturamentoPorPraca");
-                });
-
-            modelBuilder.Entity("Thunders.TechTest.ApiService.Application.DTOs.RelatorioVeiculosPorPracaDto", b =>
-                {
-                    b.Property<string>("Praca")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal?>("TiposVeiculo")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Praca");
-
-                    b.ToTable("RelatorioVeiculosPorPraca");
-                });
-
-            modelBuilder.Entity("Thunders.TechTest.ApiService.Domain.Entities.Log", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DataRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Mensagem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Log");
-                });
-
             modelBuilder.Entity("Thunders.TechTest.ApiService.Domain.Entities.Relatorio", b =>
                 {
                     b.Property<int>("Id")
@@ -131,12 +73,22 @@ namespace Thunders.TechTest.ApiService.Migrations
                     b.Property<DateTime>("DataGeracao")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("Nome")
+                    b.Property<DateTime>("DataHoraFinal")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataHoraInicial")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
                         .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("QuantidadeRegistros")
                         .HasColumnType("int");
 
-                    b.Property<string>("RelatorioJson")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

@@ -7,7 +7,7 @@ namespace Thunders.TechTest.ApiService.Infrastructure.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<PassagemVeiculo, PassagemVeiculoDTO>().ReverseMap();
+            CreateMap<PassagemVeiculo, PassagemVeiculoDto>().ReverseMap();
         }
     }
 }

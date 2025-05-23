@@ -1,6 +1,6 @@
 ﻿namespace Thunders.TechTest.ApiService.Application.DTOs
 {
-    public class PassagemVeiculoDTO
+    public class PassagemVeiculoDto
     {
         public DateTime DataHora { get; set; }
 
