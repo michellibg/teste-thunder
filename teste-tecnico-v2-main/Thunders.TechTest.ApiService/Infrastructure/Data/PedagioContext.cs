@@ -16,6 +16,7 @@ public class PedagioContext : DbContext
     public DbSet<RelatorioCidadePorHoraDto> RelatorioCidadePorHora { get; set; }
     public DbSet<RelatorioFaturamentoPorPracaDto> RelatorioFaturamentoPorPraca { get; set; }
     public DbSet<RelatorioVeiculosPorPracaDto> RelatorioVeiculosPorPraca { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

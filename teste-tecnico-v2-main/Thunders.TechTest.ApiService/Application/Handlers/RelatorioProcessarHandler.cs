@@ -7,8 +7,11 @@ using System.Text.Json;
 using Thunders.TechTest.ApiService.Application.DTOs;
 using Thunders.TechTest.ApiService.Application.Messages;
 using Thunders.TechTest.ApiService.Domain.Entities;
+using Thunders.TechTest.ApiService.Domain.Enum;
 using Thunders.TechTest.ApiService.Infrastructure.Data;
 using static Thunders.TechTest.ApiService.Constantes;
+using static Thunders.TechTest.ApiService.Domain.Enum.TiposEnum;
+using System.Globalization;
 
 namespace Thunders.TechTest.ApiService.Application.Handlers
 {

@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static Thunders.TechTest.ApiService.Domain.Enum.TiposEnum;
 
 namespace Thunders.TechTest.ApiService.Domain.Entities
 {
     public class Relatorio
     {
         [Key]
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
         public DateTime DataGeracao { get; set; }
 
@@ -13,11 +14,5 @@ namespace Thunders.TechTest.ApiService.Domain.Entities
 
         public string? RelatorioJson { get; set; }
     }
-
-    public enum NomeRelatorio
-    {
-        HorasPorCidade = 1,
-        PracasMaisFaturamMes = 2,
-        TiposVeiculoPorPraca = 3
-    }
 }
+
