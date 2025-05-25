@@ -12,6 +12,32 @@ namespace Thunders.TechTest.Tests.Domain.Entities
     public class PassagemVeiculoDtoTests
     {
         [Fact]
+        public void Deve_Criar_PassagemDto_Valida()
+        {
+            var passagem = new PassagemVeiculoDto
+            {
+                DataHora = DateTime.Now,
+                Praca = "Praça 1",
+                Cidade = "Apucarana",
+                Estado = "PR",
+                TipoVeiculo = TipoVeiculo.Moto,
+                ValorPago = 10
+            };
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(passagem);
+            var isValid = Validator.TryValidateObject(passagem, context, results, true);
+
+            // Assert
+            Assert.True(isValid);
+            Assert.Equal("Praça 1", passagem.Praca);
+            Assert.Equal(10, passagem.ValorPago);
+            Assert.Equal("Apucarana", passagem.Cidade);
+            Assert.Equal("PR", passagem.Estado);
+            Assert.Equal(TipoVeiculo.Moto, passagem.TipoVeiculo);
+        }
+
+        [Fact]
         public void Deve_Falhar_Validacao_Se_Valor_For_Zero()
         {
             var passagem = new PassagemVeiculoDto
@@ -29,23 +55,11 @@ namespace Thunders.TechTest.Tests.Domain.Entities
             var isValid = Validator.TryValidateObject(passagem, context, results, true);
 
             Assert.False(isValid);
-            Assert.Contains(results, r => r.ErrorMessage == "O valor pago deve ser maior que zero.");
+            Assert.Contains(results, r => r.ErrorMessage == "O campo 'ValorPago' deve ser maior que zero.");
         }
 
         [Fact]
-        public void Deve_Criar_Passagem_Valida()
-        {
-            // Arrange & Act
-            var passagem = new PassagemVeiculo(DateTime.Now, "Praça A", "Cidade B", 8.5m, TipoVeiculo.Carro);
-
-            // Assert
-            Assert.Equal("Praça A", passagem.Praca);
-            Assert.Equal(8.5m, passagem.ValorPago);
-            Assert.Equal(TipoVeiculo.Carro, passagem.TipoVeiculo);
-        }
-
-        [Fact]
-        public void Nao_Deve_Criar_Passagem_Com_Valor_Negativo()
+        public void Deve_Falhar_Passagem_Com_Valor_Negativo()
         {
             var dto = new PassagemVeiculoDto
             {
@@ -63,11 +77,11 @@ namespace Thunders.TechTest.Tests.Domain.Entities
             var isValid = Validator.TryValidateObject(dto, context, results, true);
 
             Assert.False(isValid);
-            Assert.Contains(results, r => r.ErrorMessage == "O valor pago deve ser maior que zero.");
+            Assert.Contains(results, r => r.ErrorMessage == "O campo 'ValorPago' deve ser maior que zero.");
         }
 
         [Fact]
-        public void Nao_Deve_Criar_Passagem_Sem_Praca()
+        public void Deve_Falhar_Passagem_Sem_Praca()
         {
             var dto = new PassagemVeiculoDto
             {

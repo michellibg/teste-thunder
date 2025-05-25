@@ -29,6 +29,8 @@ namespace Thunders.TechTest.Tests.Controllers
                     DataHora = DateTime.Now,
                     TipoVeiculo = TipoVeiculo.Carro,
                     Praca = "Praça-Teste",
+                    Cidade = "Vitória",
+                    Estado = "ES",
                     ValorPago = 10
                 },
             };
@@ -59,6 +61,8 @@ namespace Thunders.TechTest.Tests.Controllers
                     DataHora = DateTime.Now,
                     TipoVeiculo = TipoVeiculo.Carro,
                     Praca = "Praça-Teste",
+                    Cidade = "Vitória",
+                    Estado = "ES",
                     ValorPago = 10
                 },
             };
@@ -91,6 +95,8 @@ namespace Thunders.TechTest.Tests.Controllers
                     DataHora = DateTime.Now,
                     TipoVeiculo = TipoVeiculo.Carro,
                     Praca = "Praça-Teste",
+                    Cidade = "Vitória",
+                    Estado = "ES",
                     ValorPago = 10
                 },
             };
