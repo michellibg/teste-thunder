@@ -14,23 +14,6 @@ namespace Thunders.TechTest.OutOfBox.Queues
         {
             services.AutoRegisterHandlersFromAssembly(Assembly.GetEntryAssembly());
 
-            services.AddRebus(c => c
-                .Transport(t =>
-                {
-                    t.UseRabbitMq(configuration.GetConnectionString("RabbitMq"), "Thunders.TechTest");
-                }), 
-                onCreated: async bus =>
-                {
-                    if (subscriptionBuilder != null)
-                    {
-                        foreach (var type in subscriptionBuilder.TypesToSubscribe)
-                        {
-                            await bus.Subscribe(type);
-                        }
-                    }
-
-                });
-
             return services;
         }
     }
